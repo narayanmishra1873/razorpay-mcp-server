@@ -107,3 +107,7 @@ func runStdioServer(
 		return nil
 	}
 }
+
+func init() {
+	// Command registration is handled in main.go
+}
