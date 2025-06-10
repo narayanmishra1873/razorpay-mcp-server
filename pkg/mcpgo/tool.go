@@ -429,16 +429,19 @@ func (t *mark3labsToolImpl) toMCPServerTool() server.ServerTool {
 
 	// Create the tool with all options
 	tool := mcp.NewTool(t.name, toolOpts...)
-
 	// Create the handler
 	handlerFunc := func(
 		ctx context.Context,
 		req mcp.CallToolRequest,
 	) (*mcp.CallToolResult, error) {
 		// Convert mcp request to our request
+		arguments, ok := req.Params.Arguments.(map[string]interface{})
+		if !ok {
+			arguments = make(map[string]interface{})
+		}
 		ourReq := CallToolRequest{
 			Name:      req.Params.Name,
-			Arguments: req.Params.Arguments,
+			Arguments: arguments,
 		}
 
 		// Call our handler

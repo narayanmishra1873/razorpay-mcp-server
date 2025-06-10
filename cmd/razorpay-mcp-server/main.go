@@ -21,6 +21,10 @@ var rootCmd = &cobra.Command{
 	Use:     "server",
 	Short:   "Razorpay MCP Server",
 	Version: fmt.Sprintf("%s\ncommit %s\ndate %s", version, commit, date),
+	Run: func(cmd *cobra.Command, args []string) {
+		// Default to HTTP command when no subcommand is specified
+		httpCmd.Run(cmd, args)
+	},
 }
 
 // Execute runs the root command and handles any errors
@@ -33,20 +37,24 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-
 	// flags will be available for all subcommands
 	rootCmd.PersistentFlags().StringP("key", "k", "", "your razorpay api key")
 	rootCmd.PersistentFlags().StringP("secret", "s", "", "your razorpay api secret")
 	rootCmd.PersistentFlags().StringP("log-file", "l", "", "path to the log file")
 	rootCmd.PersistentFlags().StringSliceP("toolsets", "t", []string{}, "comma-separated list of toolsets to enable")
 	rootCmd.PersistentFlags().Bool("read-only", false, "run server in read-only mode")
-
+	rootCmd.PersistentFlags().StringP("address", "a", ":8080", "address to listen on for HTTP transport")
+	rootCmd.PersistentFlags().String("endpoint-path", "/mcp", "endpoint path for MCP requests")
+	rootCmd.PersistentFlags().Bool("stateless", false, "run in stateless mode (no session management)")
 	// bind flags to viper
 	_ = viper.BindPFlag("key", rootCmd.PersistentFlags().Lookup("key"))
 	_ = viper.BindPFlag("secret", rootCmd.PersistentFlags().Lookup("secret"))
 	_ = viper.BindPFlag("log_file", rootCmd.PersistentFlags().Lookup("log-file"))
 	_ = viper.BindPFlag("toolsets", rootCmd.PersistentFlags().Lookup("toolsets"))
 	_ = viper.BindPFlag("read_only", rootCmd.PersistentFlags().Lookup("read-only"))
+	_ = viper.BindPFlag("address", rootCmd.PersistentFlags().Lookup("address"))
+	_ = viper.BindPFlag("endpoint_path", rootCmd.PersistentFlags().Lookup("endpoint-path"))
+	_ = viper.BindPFlag("stateless", rootCmd.PersistentFlags().Lookup("stateless"))
 
 	// Set environment variable mappings
 	_ = viper.BindEnv("key", "RAZORPAY_KEY_ID")        // Maps RAZORPAY_KEY_ID to key
@@ -54,8 +62,8 @@ func init() {
 
 	// Enable environment variable reading
 	viper.AutomaticEnv()
-
 	// subcommands
+	rootCmd.AddCommand(httpCmd)
 	rootCmd.AddCommand(stdioCmd)
 }
 

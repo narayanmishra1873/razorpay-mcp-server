@@ -1,0 +1,10 @@
+{
+    "github.copilot.chat.codeGeneration.instructions": [
+        {
+            "file": "D:\\CashRich\\2025\\razorpay\\razorpay-mcp-server\\analysis.md"
+        },
+        {
+            "file": "D:\\CashRich\\2025\\razorpay\\razorpay-mcp-server\\migration-stdio-to-http.md"
+        }
+    ],
+}

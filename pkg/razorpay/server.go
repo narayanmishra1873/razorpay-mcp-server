@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	rzpsdk "github.com/razorpay/razorpay-go"
+	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/razorpay/razorpay-mcp-server/pkg/mcpgo"
 	"github.com/razorpay/razorpay-mcp-server/pkg/toolsets"
@@ -67,4 +68,12 @@ func (s *Server) RegisterTools() {
 // GetMCPServer returns the underlying MCP server instance
 func (s *Server) GetMCPServer() mcpgo.Server {
 	return s.server
+}
+
+// GetUnderlyingMCPServer returns the underlying mcp-go server instance for HTTP transport
+func (s *Server) GetUnderlyingMCPServer() *server.MCPServer {
+	if impl, ok := s.server.(*mcpgo.Mark3labsImpl); ok {
+		return impl.GetMCPServer()
+	}
+	return nil
 }
