@@ -7,10 +7,11 @@ services:
     branch: main
     rootDir: .
     dockerfilePath: ./Dockerfile
-    
-    # Build configuration
-    buildCommand: docker build -t razorpay-mcp-server .
-    startCommand: ./server --key $RAZORPAY_API_KEY --secret $RAZORPAY_API_SECRET --address :$PORT --endpoint-path /mcp ${TOOLSETS:+--toolsets $TOOLSETS} ${READ_ONLY:+--read-only}
+      # Build configuration
+    dockerBuildArgs:
+      VERSION: "1.0.0"
+      COMMIT: "$RENDER_GIT_COMMIT"
+      BUILD_DATE: "$RENDER_BUILD_TIME"
     
     # Environment variables (set these in Render dashboard)
     envVars:

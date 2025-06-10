@@ -1,8 +1,5 @@
 FROM golang:1.24.2-alpine AS builder
 
-# Install git for build info
-RUN apk add --no-cache git
-
 WORKDIR /app
 
 COPY go.mod go.sum ./
@@ -12,8 +9,10 @@ RUN go mod download
 COPY . .
 
 ARG VERSION="dev"
+ARG COMMIT="unknown"
+ARG BUILD_DATE="unknown"
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.version=${VERSION} -X main.commit=$(git rev-parse HEAD || echo 'unknown') -X main.date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" -o server ./cmd/razorpay-mcp-server
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.version=${VERSION} -X main.commit=${COMMIT} -X main.date=${BUILD_DATE}" -o server ./cmd/razorpay-mcp-server
 
 FROM alpine:latest
 
