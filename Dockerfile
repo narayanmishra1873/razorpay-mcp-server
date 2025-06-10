@@ -12,7 +12,8 @@ ARG VERSION="dev"
 ARG COMMIT="unknown"
 ARG BUILD_DATE="unknown"
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.version=${VERSION} -X main.commit=${COMMIT} -X main.date=${BUILD_DATE}" -o server ./cmd/razorpay-mcp-server
+WORKDIR /app/cmd/razorpay-mcp-server
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.version=${VERSION} -X main.commit=${COMMIT} -X main.date=${BUILD_DATE}" -o ../../server .
 
 FROM alpine:latest
 
@@ -47,4 +48,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/mcp || exit 1
 
 # Start the HTTP server
-CMD ["sh", "-c", "./server --key ${RAZORPAY_API_KEY} --secret ${RAZORPAY_API_SECRET} --address :${PORT} --endpoint-path ${ENDPOINT_PATH} ${TOOLSETS:+--toolsets ${TOOLSETS}} ${READ_ONLY:+--read-only}"]
+ENTRYPOINT ["./server"]
+CMD ["--key", "", "--secret", "", "--address", ":8080", "--endpoint-path", "/mcp"]
