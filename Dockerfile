@@ -1,5 +1,8 @@
 FROM golang:1.24.2-alpine AS builder
 
+# Install git for build info
+RUN apk add --no-cache git
+
 WORKDIR /app
 
 COPY go.mod go.sum ./
@@ -14,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.version=${VERSION} -X ma
 
 FROM alpine:latest
 
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates wget
 
 # Create a non-root user to run the application
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
