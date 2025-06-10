@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: razorpay-mcp-server
+    runtime: docker
+    plan: starter
+    region: oregon
+    branch: main
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    
+    # Build configuration
+    buildCommand: docker build -t razorpay-mcp-server .
+    startCommand: ./server --key $RAZORPAY_API_KEY --secret $RAZORPAY_API_SECRET --address :$PORT --endpoint-path /mcp ${TOOLSETS:+--toolsets $TOOLSETS} ${READ_ONLY:+--read-only}
+    
+    # Environment variables (set these in Render dashboard)
+    envVars:
+      - key: RAZORPAY_API_KEY
+        sync: false  # Set this manually in Render dashboard
+      - key: RAZORPAY_API_SECRET
+        sync: false  # Set this manually in Render dashboard
+      - key: TOOLSETS
+        value: "orders,payments,payment_links,payouts,qr_codes,refunds,settlements"
+      - key: READ_ONLY
+        value: "false"
+      - key: ENDPOINT_PATH
+        value: "/mcp"
+    
+    # Auto-deploy on push to main branch
+    autoDeploy: true
+    
+    # Health check endpoint
+    healthCheckPath: /mcp

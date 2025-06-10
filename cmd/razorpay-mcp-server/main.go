@@ -55,10 +55,13 @@ func init() {
 	_ = viper.BindPFlag("address", rootCmd.PersistentFlags().Lookup("address"))
 	_ = viper.BindPFlag("endpoint_path", rootCmd.PersistentFlags().Lookup("endpoint-path"))
 	_ = viper.BindPFlag("stateless", rootCmd.PersistentFlags().Lookup("stateless"))
-
 	// Set environment variable mappings
-	_ = viper.BindEnv("key", "RAZORPAY_KEY_ID")        // Maps RAZORPAY_KEY_ID to key
-	_ = viper.BindEnv("secret", "RAZORPAY_KEY_SECRET") // Maps RAZORPAY_KEY_SECRET to secret
+	_ = viper.BindEnv("key", "RAZORPAY_KEY_ID", "RAZORPAY_API_KEY")        // Maps RAZORPAY_KEY_ID or RAZORPAY_API_KEY to key
+	_ = viper.BindEnv("secret", "RAZORPAY_KEY_SECRET", "RAZORPAY_API_SECRET") // Maps RAZORPAY_KEY_SECRET or RAZORPAY_API_SECRET to secret
+	_ = viper.BindEnv("address", "ADDRESS")                               // Maps ADDRESS to address
+	_ = viper.BindEnv("toolsets", "TOOLSETS")                            // Maps TOOLSETS to toolsets
+	_ = viper.BindEnv("read_only", "READ_ONLY")                          // Maps READ_ONLY to read_only
+	_ = viper.BindEnv("endpoint_path", "ENDPOINT_PATH")                  // Maps ENDPOINT_PATH to endpoint_path
 
 	// Enable environment variable reading
 	viper.AutomaticEnv()

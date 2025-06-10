@@ -1,6 +1,70 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+razorpay-mcp-server
+server
+
+# Build directories
 /dist
 /bin
 /.go
-/logs
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file
+go.work
+
+# Dependency directories
 /vendor
-razorpay-mcp-server
+
+# Logs
+/logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.test
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Config files (may contain sensitive data)
+config.json
+config.yaml
+config.yml
+!render.yaml
+
+# Coverage reports
+coverage.out
+coverage.html
+
+# Air (Go hot reload)
+tmp/
+
+# Render build cache
+.render-buildpacks-cache/

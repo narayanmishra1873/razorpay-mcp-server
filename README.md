@@ -2,6 +2,64 @@
 
 The Razorpay MCP Server is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that provides seamless integration with Razorpay APIs, enabling advanced payment processing capabilities for developers and AI tools.
 
+## 🚀 Quick Deploy
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/razorpay/razorpay-mcp-server)
+
+## 🌟 Features
+
+- **🚀 HTTP Transport** - Default transport for web applications and API integrations
+- **📡 stdio Transport** - Legacy support for command-line tools  
+- **🔧 Multiple Toolsets** - Orders, Payments, Payment Links, Payouts, QR Codes, Refunds, Settlements
+- **🔒 Read-only Mode** - Safe mode for query-only operations
+- **🌐 Production Ready** - Optimized for cloud deployment with Docker support
+
+## 📖 Quick Start
+
+### Local Development
+
+```bash
+# Clone and build
+git clone https://github.com/razorpay/razorpay-mcp-server
+cd razorpay-mcp-server
+go build -o razorpay-mcp-server ./cmd/razorpay-mcp-server
+
+# Run HTTP server (default)
+./razorpay-mcp-server --key YOUR_KEY --secret YOUR_SECRET --address :8080
+
+# Run stdio server (legacy)
+./razorpay-mcp-server stdio --key YOUR_KEY --secret YOUR_SECRET
+```
+
+### Production Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Render, AWS, and other platforms.
+
+### MCP Client Integration
+
+**HTTP Transport (Recommended):**
+```json
+{
+  "razorpay-mcp": {
+    "url": "https://your-server.onrender.com/mcp"
+  }
+}
+```
+
+**stdio Transport (Local):**
+```json
+{
+  "razorpay-mcp": {
+    "command": "./razorpay-mcp-server",
+    "args": ["stdio"],
+    "env": {
+      "RAZORPAY_API_KEY": "your_key",
+      "RAZORPAY_API_SECRET": "your_secret"
+    }
+  }
+}
+```
+
 ## Available Tools
 
 Currently, the Razorpay MCP Server provides the following tools:
