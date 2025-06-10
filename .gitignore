@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-razorpay-mcp-server
+/razorpay-mcp-server
 server
 
 # Build directories
