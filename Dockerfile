@@ -49,4 +49,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 
 # Start the HTTP server
 ENTRYPOINT ["./server"]
-CMD ["--key", "", "--secret", "", "--address", ":8080", "--endpoint-path", "/mcp"]
+CMD ["--address", ":8080", "--endpoint-path", "/mcp"]

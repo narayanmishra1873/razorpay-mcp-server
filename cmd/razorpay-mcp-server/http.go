@@ -19,6 +19,7 @@ import (
 	"github.com/razorpay/razorpay-mcp-server/pkg/razorpay"
 )
 
+// Hi
 // httpCmd starts the mcp server in HTTP transport mode
 var httpCmd = &cobra.Command{
 	Use:   "http",
