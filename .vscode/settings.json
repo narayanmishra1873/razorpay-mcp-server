@@ -5,6 +5,9 @@
         },
         {
             "file": "D:\\CashRich\\2025\\razorpay\\razorpay-mcp-server\\migration-stdio-to-http.md"
+        },
+        {
+            "text": "Dont ever use '&&' in the terminal to run, instead use ';'. for example: dont use 'cd d:\\CashRich\\2025\\razorpay\\razorpay-mcp-server && git log --oneline -5', instead use 'cd \"d:\\CashRich\\2025\\razorpay\\razorpay-mcp-server\"; git log --oneline -5'"
         }
     ],
 }
